@@ -1,28 +1,29 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import { WagmiConfig, createConfig, configureChains } from 'wagmi'
-import { baseGoerli } from '@wagmi/core/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { createPublicClient, http } from 'viem'
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { WagmiConfig, createConfig, configureChains } from "wagmi";
+import { baseGoerli } from "@wagmi/core/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { createPublicClient, http } from "viem";
 
 const { chains, webSocketPublicClient } = configureChains(
   [baseGoerli],
-  [alchemyProvider({ apiKey: '' }), publicProvider()],
-)
+  [
+    alchemyProvider({ apiKey: "uIuh2nC5sbcVeiaKneo31wT4pzczMhL8" }),
+    publicProvider(),
+  ]
+);
 
 const config = createConfig({
   autoConnect: false,
   publicClient: createPublicClient({
     chain: baseGoerli,
-    transport: http()
+    transport: http(),
   }),
-  connectors: [
-    new MetaMaskConnector({ chains }),
-  ],
+  connectors: [new MetaMaskConnector({ chains })],
   webSocketPublicClient,
-})
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -31,6 +32,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </WagmiConfig>
     </>
-  )
+  );
 }
-
