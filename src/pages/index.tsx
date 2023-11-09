@@ -14,6 +14,7 @@ import { ChainId } from "@biconomy/core-types";
 import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { useState } from "react";
+import Counter from "@/components/Counter";
 
 export default function Home() {
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -22,15 +23,17 @@ export default function Home() {
   const { disconnect } = useDisconnect();
   const { data: walletClient } = useWalletClient();
   const [smartAccountAddress, setSmartAccountAddress] = useState();
-
+  const [biconomyAccount, setBiconomyAccount] =
+    useState<BiconomySmartAccountV2 | null>(null);
   const bundler: IBundler = new Bundler({
-    bundlerUrl: "",
-    chainId: ChainId.BASE_GOERLI_TESTNET,
+    bundlerUrl: `https://bundler.biconomy.io/api/v2/${ChainId.POLYGON_MUMBAI}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
+    chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   });
 
   const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: "",
+    paymasterUrl:
+      "https://paymaster.biconomy.io/api/v1/80001/pKLSky7Jb.9370f1ef-de34-4a90-afcf-65c962f34ada",
   });
 
   const createSmartAccount = async () => {
@@ -42,13 +45,14 @@ export default function Home() {
     });
 
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.BASE_GOERLI_TESTNET,
+      chainId: ChainId.POLYGON_MUMBAI,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
       defaultValidationModule: ownerShipModule,
       activeValidationModule: ownerShipModule,
     });
+    setBiconomyAccount(biconomySmartAccount);
     console.log({ biconomySmartAccount });
     const saAddress = await biconomySmartAccount.getAccountAddress();
     setSmartAccountAddress(saAddress);
@@ -60,6 +64,9 @@ export default function Home() {
         <div>Counter Contract POA</div>
         {address && <h2>EOA: {address}</h2>}
         {smartAccountAddress && <h2>Smart Account: {smartAccountAddress}</h2>}
+        {biconomyAccount && (
+          <Counter smartAccount={biconomyAccount} provider={""} />
+        )}
         {connectors.map((connector) => (
           <button key={connector.id} onClick={() => connect({ connector })}>
             {connector.name}

@@ -1,14 +1,14 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { WagmiConfig, createConfig, configureChains } from "wagmi";
-import { baseGoerli } from "@wagmi/core/chains";
+import { polygonMumbai } from "@wagmi/core/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { createPublicClient, http } from "viem";
 
 const { chains, webSocketPublicClient } = configureChains(
-  [baseGoerli],
+  [polygonMumbai],
   [
     alchemyProvider({ apiKey: "uIuh2nC5sbcVeiaKneo31wT4pzczMhL8" }),
     publicProvider(),
@@ -18,7 +18,7 @@ const { chains, webSocketPublicClient } = configureChains(
 const config = createConfig({
   autoConnect: false,
   publicClient: createPublicClient({
-    chain: baseGoerli,
+    chain: polygonMumbai,
     transport: http(),
   }),
   connectors: [new MetaMaskConnector({ chains })],
