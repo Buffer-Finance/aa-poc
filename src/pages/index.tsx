@@ -5,7 +5,8 @@ import { WalletClientSigner } from "@alchemy/aa-core";
 import { ethers } from "ethers";
 
 import {
-  BiconomySmartAccountV2,
+  BiconomySmartAccount,
+  BiconomySmartAccountConfig,
   DEFAULT_ENTRYPOINT_ADDRESS,
 } from "@biconomy/account";
 import {
@@ -26,7 +27,7 @@ export default function Home() {
   const { data: walletClient } = useWalletClient();
   const [smartAccountAddress, setSmartAccountAddress] = useState();
   const [biconomyAccount, setBiconomyAccount] =
-    useState<BiconomySmartAccountV2 | null>(null);
+    useState<BiconomySmartAccount | null>(null);
   const bundler: IBundler = new Bundler({
     bundlerUrl: `https://bundler.biconomy.io/api/v2/${ChainId.POLYGON_MUMBAI}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
     chainId: ChainId.POLYGON_MUMBAI,
@@ -51,23 +52,23 @@ export default function Home() {
 
     // const provider = new ethers.providers.Web3Provider(walletClient);
     // const signer = provider.getSigner();
-    const ownerShipModule = await ECDSAOwnershipValidationModule.create({
-      signer,
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-    });
+    // const ownerShipModule = await ECDSAOwnershipValidationModule.create({
+    //   signer,
+    //   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+    // });
 
-    let biconomySmartAccount = await BiconomySmartAccountV2.create({
+    const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+      signer: signer,
       chainId: ChainId.POLYGON_MUMBAI,
       bundler: bundler,
       paymaster: paymaster,
-      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: ownerShipModule,
-      activeValidationModule: ownerShipModule,
-    });
+    };
+    let biconomySmartAccount = new BiconomySmartAccount(
+      biconomySmartAccountConfig
+    );
+    biconomySmartAccount = await biconomySmartAccount.init();
+
     setBiconomyAccount(biconomySmartAccount);
-    console.log({ biconomySmartAccount });
-    const saAddress = await biconomySmartAccount.getAccountAddress();
-    setSmartAccountAddress(saAddress);
   };
 
   return (
