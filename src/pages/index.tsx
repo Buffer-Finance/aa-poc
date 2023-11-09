@@ -2,6 +2,8 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { useConnect, useAccount, useDisconnect, useWalletClient } from "wagmi";
 import { WalletClientSigner } from "@alchemy/aa-core";
+import { ethers } from "ethers";
+
 import {
   BiconomySmartAccountV2,
   DEFAULT_ENTRYPOINT_ADDRESS,
@@ -38,9 +40,19 @@ export default function Home() {
 
   const createSmartAccount = async () => {
     if (!walletClient) return;
-    const signer = new WalletClientSigner(walletClient, "json-rpc");
+    const { account, chain, transport } = walletClient;
+    const network = {
+      chainId: chain.id,
+      name: chain.name,
+      ensAddress: chain.contracts?.ensRegistry?.address,
+    };
+    const provider = new ethers.providers.Web3Provider(transport, network);
+    const signer = provider.getSigner(account.address);
+
+    // const provider = new ethers.providers.Web3Provider(walletClient);
+    // const signer = provider.getSigner();
     const ownerShipModule = await ECDSAOwnershipValidationModule.create({
-      signer: signer,
+      signer,
       moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
     });
 
