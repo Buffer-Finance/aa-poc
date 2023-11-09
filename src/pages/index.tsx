@@ -74,7 +74,7 @@ export default function Home() {
   return (
     <>
       <main className={""}>
-        <div>Counter Contract POA</div>
+        <div>Counter Contract POC</div>
         {address && <h2>EOA: {address}</h2>}
         {smartAccountAddress && <h2>Smart Account: {smartAccountAddress}</h2>}
         {biconomyAccount && (
