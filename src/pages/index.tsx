@@ -18,6 +18,7 @@ import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { useState } from "react";
 import Counter from "@/components/Counter";
+import Session from "@/components/Session";
 
 export default function Home() {
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -88,11 +89,14 @@ export default function Home() {
               " (connecting)"}
           </button>
         ))}
-
         {error && <div>{error.message}</div>}
         {isConnected && <button onClick={disconnect}>Disconnect</button>}
         {isConnected && (
           <button onClick={createSmartAccount}>Create Smart Account</button>
+        )}
+        <div>------------------</div>
+        {biconomyAccount && (
+          <Session smartAccount={biconomyAccount} address={address} />
         )}
       </main>
     </>
