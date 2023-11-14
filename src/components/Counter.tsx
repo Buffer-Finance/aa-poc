@@ -53,7 +53,7 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
       };
       console.log(`1[deb-txn]Counter-const: `, tx1);
 
-      let partialUserOp = await smartAccount.buildUserOp([tx1]);
+      let partialUserOp = await smartAccount.buildUserOp([tx1, tx1, tx1, tx1]);
       console.log(`2[deb-txn]Counter-partialUserOp: `, partialUserOp);
 
       const biconomyPaymaster =
