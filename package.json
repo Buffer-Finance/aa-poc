@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@alchemy/aa-core": "^0.2.0",
-    "@biconomy/account": "^3.0.0-alpha.0",
-    "@biconomy/bundler": "^3.0.0-alpha.0",
-    "@biconomy/common": "^3.0.0-alpha.0",
-    "@biconomy/core-types": "^3.0.0-alpha.0",
-    "@biconomy/paymaster": "^3.0.0-alpha.0",
+    "@alchemy/aa-core": "^1.0.0",
+    "@biconomy/account": "^3.1.0",
+    "@biconomy/bundler": "^3.1.0",
+    "@biconomy/common": "^3.1.0",
+    "@biconomy/core-types": "^3.1.0",
+    "@biconomy/paymaster": "^3.1.0",
     "ethers": "5.7.2",
     "next": "14.0.1",
     "react": "^18",

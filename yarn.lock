@@ -33,10 +33,10 @@
   resolved "https://registry.yarnpkg.com/@adraffy/ens-normalize/-/ens-normalize-1.9.4.tgz#aae21cb858bbb0411949d5b7b3051f4209043f62"
   integrity sha512-UK0bHA7hh9cR39V+4gl2/NnBBjoXIxkuWAPCaY4X7fbH4L/azIi7ilWOCjMUYfpJgraLUAqkRi2BqrjME8Rynw==
 
-"@alchemy/aa-core@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@alchemy/aa-core/-/aa-core-0.2.0.tgz#ede9d2b107fd6c55c71eca9f03d6c22e4530a300"
-  integrity sha512-qBkY3qFAbWGfqhghyv6kRw+wGsVOtlBjsoSOG24bW3fp/I5TiUZlQrOIKnJiZOj+QW2EuBCu6Kwj10OA/jzKig==
+"@alchemy/aa-core@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@alchemy/aa-core/-/aa-core-1.0.0.tgz#b3baffa3b974475e28b3492b92115c73b34ec47f"
+  integrity sha512-x8rTgLxhw5b9f91sxzZh4X+o5ylX0pq8S2uYZKnDOUSnbdKhP8ZjKfKLKExce82O9nM4qfIFJaLKJTzMYNtExA==
   dependencies:
     abitype "^0.8.3"
     eventemitter3 "^5.0.1"
@@ -62,7 +62,7 @@
     dotenv "^16.0.3"
     ethereumjs-util "^7.1.0"
 
-"@biconomy/account@^3.0.0-alpha.0":
+"@biconomy/account@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@biconomy/account/-/account-3.1.0.tgz#9829e44d76e271ec7d85a6bb1dd53dbf3abfbba1"
   integrity sha512-shyecaJa5IuNGe+V9o+bNcPmjWbpv6QMTj88Qe8Plz/eAAzILpIKT4s2Jt2KV2mebXRSp/RSgLICRMbeSsxPSw==
@@ -79,7 +79,7 @@
     "@ethersproject/providers" "^5.7.2"
     ethers "^5.7.0"
 
-"@biconomy/bundler@^3.0.0-alpha.0", "@biconomy/bundler@^3.1.0":
+"@biconomy/bundler@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@biconomy/bundler/-/bundler-3.1.0.tgz#f1a46c3f16b3c4edcc96b5fa48a6513c24e03d2f"
   integrity sha512-PS1pAYRX01sILgor8xs8NYkDR6xOCg+igY2dZop/MFz8ibfPluSjgsSXOOnf8InolMm4z5L6k0PcgsLCTjPDaw==
@@ -89,7 +89,7 @@
     "@ethersproject/providers" "^5.7.2"
     ethers "^5.7.0"
 
-"@biconomy/common@^3.0.0-alpha.0", "@biconomy/common@^3.1.0":
+"@biconomy/common@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@biconomy/common/-/common-3.1.0.tgz#08e07ebe7d0e62a2dc52bc6aa1c7f07eec67667a"
   integrity sha512-28uMOgMhitG0JhM4I48Kz5WPkc75qZ8LuS4X3mvuv6UpoojiVrWmh1pSA3PW+8LHreEsaopNVx0yfd1MzX534Q==
@@ -107,7 +107,7 @@
     ethers "^5.7.0"
     typechain "^8.1.1"
 
-"@biconomy/core-types@^3.0.0-alpha.0", "@biconomy/core-types@^3.1.0":
+"@biconomy/core-types@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@biconomy/core-types/-/core-types-3.1.0.tgz#fe405c809155ef26b6f3557ae67af951d8ea552f"
   integrity sha512-6daCXWxfT2Gl3pzUTvz0bpzXytBMt1CRFYmH5QiRv9nLrh9qVsjbJz1rWwdZOu0J90R5Ium5ssHpPFFoAIr58A==
@@ -140,7 +140,7 @@
     "@nomiclabs/hardhat-ethers" "^2.1.0"
     node-fetch "^2.6.6"
 
-"@biconomy/paymaster@^3.0.0-alpha.0", "@biconomy/paymaster@^3.1.0":
+"@biconomy/paymaster@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@biconomy/paymaster/-/paymaster-3.1.0.tgz#325f0f7f6fab2aa6863b9b092fa88d6d6e4e9514"
   integrity sha512-m/0ATqQ1hb4G9dHzjhGukCTE82yv/CwwH6p9IM11dTxwvAKzYGeeOfqvmnzmy86ag0wYM1qwdo339mWwlwFJdQ==

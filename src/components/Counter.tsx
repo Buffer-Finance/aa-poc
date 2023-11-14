@@ -23,7 +23,6 @@ const TotalCountDisplay: React.FC<{ count: number }> = ({ count }) => {
 };
 
 const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
-  console.log(`Counter-smartAccount: `, smartAccount);
   const [count, setCount] = useState<number>(0);
   const [counterContract, setCounterContract] = useState<any>(null);
 
@@ -51,46 +50,34 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
         to: counterAddress,
         data: data,
       };
-      console.log(`1[deb-txn]Counter-const: `, tx1);
-
-      // translated upto here===
-      let partialUserOp = await smartAccount.buildUserOp([tx1]);
-      console.log(`2[deb-txn]Counter-partialUserOp: `, partialUserOp);
-
+      let userOp = await smartAccount?.buildUserOp([tx1, tx1]);
+      console.log("UserOp", { userOp });
       const biconomyPaymaster =
-        smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
-
+        smartAccount?.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
-        // optional params...
+        smartAccountInfo: {
+          name: "BICONOMY",
+          version: "2.0.0",
+        },
       };
-      console.log(`3[deb-txn]paymasterServiceData: `, paymasterServiceData);
-
-      try {
-        const paymasterAndDataResponse =
-          await biconomyPaymaster.getPaymasterAndData(
-            partialUserOp,
-            paymasterServiceData
-          );
-        console.log(
-          `4[deb-txn]paymasterAndDataResponse: `,
-          paymasterAndDataResponse
+      const paymasterAndDataResponse =
+        await biconomyPaymaster?.getPaymasterAndData(
+          //@ts-ignore
+          userOp,
+          paymasterServiceData
         );
 
-        partialUserOp.paymasterAndData =
-          paymasterAndDataResponse.paymasterAndData;
+      //@ts-ignore
+      userOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
+      //@ts-ignore
+      const userOpResponse = await smartAccount?.sendUserOp(userOp);
+      console.log("userOpHash", { userOpResponse });
+      //@ts-ignore
+      const { receipt } = await userOpResponse.wait(1);
+      console.log("txHash", receipt.transactionHash);
 
-        const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
-        console.log(`5[deb-txn]userOpResponse: `, userOpResponse);
-        const transactionDetails = await userOpResponse.wait();
-        console.log("Transaction Details:", transactionDetails);
-        console.log("Transaction Hash:", userOpResponse.userOpHash);
-
-        getCount(true);
-      } catch (e) {
-        console.error("Error executing transaction:", e);
-        // ... handle the error if needed ...
-      }
+      getCount(true);
     } catch (error) {
       console.error("Error executing transaction:", error);
     }

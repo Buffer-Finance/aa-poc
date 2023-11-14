@@ -4,6 +4,7 @@ import {
   useDisconnect,
   useWalletClient,
   WalletClient,
+  useBalance,
 } from "wagmi";
 import { providers } from "ethers";
 
@@ -23,6 +24,7 @@ import { IBundler, Bundler } from "@biconomy/bundler";
 import { useState } from "react";
 import Counter from "@/components/Counter";
 import Session from "@/components/Session";
+import { SendTokens } from "@/components/Send";
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient;
   const network = {
@@ -58,22 +60,26 @@ export default function Home() {
   const createv2SmartAccount = async () => {
     if (!walletClient) return;
     // const signer = new WalletClientSigner(walletClient, "json-rpc");
-    const ownerShipModule = await ECDSAOwnershipValidationModule.create({
+    const ecdsaModule = await ECDSAOwnershipValidationModule.create({
       signer: walletClientToSigner(walletClient),
       moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
     });
-
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.BASE_GOERLI_TESTNET,
+      chainId: ChainId.POLYGON_MUMBAI,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: ownerShipModule,
-      activeValidationModule: ownerShipModule,
+      defaultValidationModule: ecdsaModule,
+      activeValidationModule: ecdsaModule,
     });
-
+    console.log(biconomySmartAccount);
     setBiconomyAccount(biconomySmartAccount);
   };
+  const { data, isError } = useBalance({
+    token: "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+    address: "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6",
+  });
+  console.log("1ct balance", data);
   const createv1SmartAccount = async () => {
     if (!walletClient) return;
     const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
@@ -111,16 +117,21 @@ export default function Home() {
         {isConnected && <button onClick={disconnect}>Disconnect</button>}
         {isConnected && (
           <button
-            onClick={createv1SmartAccount}
-            //  onClick={createv2SmartAccount}
+            // onClick={createv1SmartAccount}
+            onClick={createv2SmartAccount}
           >
             Create Smart Account
           </button>
         )}
         <div>------------------</div>
         {biconomyAccount && (
-          <Session smartAccount={biconomyAccount} address={address} />
+          <Session
+            smartAccount={biconomyAccount}
+            address={address}
+            provider={walletClientToSigner(walletClient)}
+          />
         )}
+        {/* <SendTokens /> */}
       </main>
     </>
   );
