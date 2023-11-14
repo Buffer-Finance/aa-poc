@@ -95,7 +95,11 @@ export default function Home() {
 
     setBiconomyAccount(biconomySmartAccount);
   };
-
+  const steps = [
+    "Connect Metamask",
+    "Create Smart Account. Now you can interact gaslessly",
+    "Create Session Keys for better no-click UX (Gas needed in Smart account)",
+  ];
   return (
     <>
       <main className={""}>
@@ -105,6 +109,12 @@ export default function Home() {
         {biconomyAccount && (
           <Counter smartAccount={biconomyAccount} provider={""} />
         )}
+
+        <ol>
+          {steps.map((d) => (
+            <li>{d}</li>
+          ))}
+        </ol>
         {connectors.map((connector) => (
           <button key={connector.id} onClick={() => connect({ connector })}>
             {connector.name}
