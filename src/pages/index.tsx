@@ -74,6 +74,9 @@ export default function Home() {
     });
     console.log(biconomySmartAccount);
     setBiconomyAccount(biconomySmartAccount);
+    const smartAddressTemporary =
+      await biconomySmartAccount.getAccountAddress();
+    setSmartAccountAddress(smartAddressTemporary);
   };
   const { data, isError } = useBalance({
     token: "0xdA5289fCAAF71d52a80A254da614a192b693e977",
@@ -94,6 +97,8 @@ export default function Home() {
     biconomySmartAccount = await biconomySmartAccount.init();
 
     setBiconomyAccount(biconomySmartAccount);
+    const addres = await biconomySmartAccount.getSmartAccountAddress();
+    set;
   };
   const steps = [
     "Connect Metamask",
@@ -109,7 +114,6 @@ export default function Home() {
         {biconomyAccount && (
           <Counter smartAccount={biconomyAccount} provider={""} />
         )}
-
         <ol>
           {steps.map((d) => (
             <li>{d}</li>
