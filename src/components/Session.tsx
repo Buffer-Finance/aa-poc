@@ -90,7 +90,7 @@ const Session: React.FC<{
           sessionKeyData: sessionKeyData,
         },
       ]);
-      console.log("2sessionTxData", sessionTxData);
+      console.log("debsessionTxData", sessionTxData);
 
       // write a programe using wagmi hooks to send some erc20 tokens
       // tx to set session key
@@ -106,21 +106,24 @@ const Session: React.FC<{
         const enableModuleTrx = await smartAccount.getEnableModuleData(
           DEFAULT_SESSION_KEY_MANAGER_MODULE
         );
+        console.log("deb", "enabling");
         transactionArray.push(enableModuleTrx);
       }
 
       transactionArray.push(setSessiontrx);
-      console.log(`3Session-transactionArray: `, transactionArray);
+      transactionArray.push(setSessiontrx);
+      console.log(`deb3Session-transactionArray: `, transactionArray);
 
-      let partialUserOp = await smartAccount.buildUserOp(transactionArray);
-      console.log(`4Session-partialUserOp: `, partialUserOp);
+      // let partialUserOp = await smartAccount.buildUserOp(transactionArray);
+      // console.log(`4Session-partialUserOp: `, partialUserOp);
 
-      const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
-      console.log(`5userOp Hash: ${userOpResponse.userOpHash}`);
-      const transactionDetails = await userOpResponse.wait();
-      console.log("6txHash", transactionDetails.receipt.transactionHash);
-      setIsSessionActive(true);
+      // const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+      // console.log(`5userOp Hash: ${userOpResponse.userOpHash}`);
+      // const transactionDetails = await userOpResponse.wait();
+      // console.log("6txHash", transactionDetails.receipt.transactionHash);
+      // setIsSessionActive(true);
     } catch (err: any) {
+      console.log("deb-error", err);
       console.error(err);
     }
   };
