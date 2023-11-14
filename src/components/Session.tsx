@@ -76,10 +76,9 @@ const Session: React.FC<{
           sessionKeyEOA,
           "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
           "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6", // receiver address
-          ethers.utils.parseUnits("5".toString(), 6).toHexString(), // 50 usdc amount
+          ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
         ]
       );
-      console.log(`1Session-sessionKeyData: `, sessionKeyData);
 
       const sessionTxData = await sessionModule.createSessionData([
         {
@@ -90,9 +89,8 @@ const Session: React.FC<{
           sessionKeyData: sessionKeyData,
         },
       ]);
-      console.log("debsessionTxData", sessionTxData);
+      console.log("sessionTxData", sessionTxData);
 
-      // write a programe using wagmi hooks to send some erc20 tokens
       // tx to set session key
       const setSessiontrx = {
         to: DEFAULT_SESSION_KEY_MANAGER_MODULE, // session manager module address
@@ -106,24 +104,19 @@ const Session: React.FC<{
         const enableModuleTrx = await smartAccount.getEnableModuleData(
           DEFAULT_SESSION_KEY_MANAGER_MODULE
         );
-        console.log("deb", "enabling");
         transactionArray.push(enableModuleTrx);
       }
 
       transactionArray.push(setSessiontrx);
-      transactionArray.push(setSessiontrx);
-      console.log(`deb3Session-transactionArray: `, transactionArray);
 
-      // let partialUserOp = await smartAccount.buildUserOp(transactionArray);
-      // console.log(`4Session-partialUserOp: `, partialUserOp);
+      let partialUserOp = await smartAccount.buildUserOp(transactionArray);
 
-      // const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
-      // console.log(`5userOp Hash: ${userOpResponse.userOpHash}`);
-      // const transactionDetails = await userOpResponse.wait();
-      // console.log("6txHash", transactionDetails.receipt.transactionHash);
-      // setIsSessionActive(true);
+      const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+      console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
+      const transactionDetails = await userOpResponse.wait();
+      console.log("txHash", transactionDetails.receipt.transactionHash);
+      setIsSessionActive(true);
     } catch (err: any) {
-      console.log("deb-error", err);
       console.error(err);
     }
   };

@@ -81,8 +81,8 @@ export default function Home() {
   const { data, isError } = useBalance({
     token: "0xdA5289fCAAF71d52a80A254da614a192b693e977",
     address: "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6",
+    watch: true,
   });
-  console.log("1ct balance", data);
   const createv1SmartAccount = async () => {
     if (!walletClient) return;
     const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
@@ -98,7 +98,6 @@ export default function Home() {
 
     setBiconomyAccount(biconomySmartAccount);
     const addres = await biconomySmartAccount.getSmartAccountAddress();
-    set;
   };
   const steps = [
     "Connect Metamask",
@@ -108,6 +107,7 @@ export default function Home() {
   return (
     <>
       <main className={""}>
+        <button onClick={() => console.log("1ct ", data)}>Fetch Balance</button>
         <div>Counter Contract POC</div>
         {address && <h2>EOA: {address}</h2>}
         {smartAccountAddress && <h2>Smart Account: {smartAccountAddress}</h2>}

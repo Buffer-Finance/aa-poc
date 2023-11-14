@@ -23,8 +23,9 @@ const ERC20Transfer: React.FC<props> = ({
     }
     try {
       const erc20ModuleAddr = "0x000000D50C68705bd6897B2d17c7de32FB519fDA";
-
+      // get session key from local storage
       const sessionKeyPrivKey = window.localStorage.getItem("sessionPKey");
+      console.log("sessionKeyPrivKey", sessionKeyPrivKey);
       if (!sessionKeyPrivKey) {
         alert("Session key not found please create session");
         return;
@@ -37,11 +38,9 @@ const ERC20Transfer: React.FC<props> = ({
         moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
         smartAccountAddress: address,
       });
-      console.log(`deb1ERC30Transfer-sessionModule: `, sessionModule);
 
       // set active module to sessionModule
       smartAccount = smartAccount.setActiveValidationModule(sessionModule);
-      console.log(`deb2 module set successfully`);
 
       const tokenContract = new ethers.Contract(
         // polygon mumbai usdc address
@@ -49,13 +48,14 @@ const ERC20Transfer: React.FC<props> = ({
         erc20ABI,
         provider
       );
-      let decimals = 6;
+      let decimals = 18;
 
-      // try {
-      //   decimals = await tokenContract.decimals();
-      // } catch (error) {
-      //   throw new Error("invalid token address supplied");
-      // }
+      try {
+        decimals = await tokenContract.decimals();
+        console.log(`ERC30Transfer-decimals: `, decimals);
+      } catch (error) {
+        throw new Error("invalid token address supplied");
+      }
 
       const { data } = await tokenContract.populateTransaction.transfer(
         "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6", // receiver address
@@ -68,7 +68,6 @@ const ERC20Transfer: React.FC<props> = ({
         data: data,
         value: "0",
       };
-      console.log(`deb3 tx1: `, tx1);
 
       // build user op
       let userOp = await smartAccount.buildUserOp([tx1], {
@@ -83,23 +82,18 @@ const ERC20Transfer: React.FC<props> = ({
           sessionValidationModule: erc20ModuleAddr,
         },
       });
-      console.log(`deb4[transfer]userOp: `, userOp);
 
       // send user op
       const userOpResponse = await smartAccount.sendUserOp(userOp, {
         sessionSigner: sessionSigner,
         sessionValidationModule: erc20ModuleAddr,
       });
-      console.log(`deb5[transfer]userOpResponse: `, userOpResponse);
 
+      console.log("userOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
-      console.log(`deb6[transfer]userOpResponse: `, userOpResponse);
-
-      console.log("deb7txHash", receipt.transactionHash);
+      console.log("txHash", receipt.transactionHash);
       const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`;
-      console.log("debhappy diwali", polygonScanlink);
     } catch (err: any) {
-      console.log("deberr", err);
       console.error(err);
     }
   };
