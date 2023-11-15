@@ -13,18 +13,19 @@ import {
   BiconomySmartAccountConfig,
   BiconomySmartAccountV2,
   DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 import {
   ECDSAOwnershipValidationModule,
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
-import { ChainId } from "@biconomy/core-types";
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import { IBundler, Bundler } from "@biconomy/bundler";
+} from "@biconomy-devx/modules";
+import { ChainId } from "@biconomy-devx/core-types";
+import { IPaymaster, BiconomyPaymaster } from "@biconomy-devx/paymaster";
+import { IBundler, Bundler } from "@biconomy-devx/bundler";
 import { useState } from "react";
 import Counter from "@/components/Counter";
 import Session from "@/components/Session";
 import { SendTokens } from "@/components/Send";
+import CreateBatchRouter from "@/components/BatchedSession";
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient;
   const network = {
@@ -139,11 +140,16 @@ export default function Home() {
         )}
         <div>------------------</div>
         {biconomyAccount && (
-          <Session
+          <CreateBatchRouter
+            scwAddress={smartAccountAddress}
             smartAccount={biconomyAccount}
-            address={address}
             provider={walletClientToSigner(walletClient)}
           />
+          // <Session
+          //   smartAccount={biconomyAccount}
+          //   address={address}
+          //   provider={walletClientToSigner(walletClient)}
+          // />
         )}
         {/* <SendTokens /> */}
       </main>

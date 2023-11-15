@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import {
   BiconomySmartAccount,
   BiconomySmartAccountV2,
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 import {
   IHybridPaymaster,
   SponsorUserOperationDto,
   PaymasterMode,
-} from "@biconomy/paymaster";
+} from "@biconomy-devx/paymaster";
 import abi from "./abi.json";
 import { ethers } from "ethers";
 import { useContractRead } from "wagmi";

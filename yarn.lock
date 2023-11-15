@@ -33,16 +33,6 @@
   resolved "https://registry.yarnpkg.com/@adraffy/ens-normalize/-/ens-normalize-1.9.4.tgz#aae21cb858bbb0411949d5b7b3051f4209043f62"
   integrity sha512-UK0bHA7hh9cR39V+4gl2/NnBBjoXIxkuWAPCaY4X7fbH4L/azIi7ilWOCjMUYfpJgraLUAqkRi2BqrjME8Rynw==
 
-"@alchemy/aa-core@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@alchemy/aa-core/-/aa-core-1.0.0.tgz#b3baffa3b974475e28b3492b92115c73b34ec47f"
-  integrity sha512-x8rTgLxhw5b9f91sxzZh4X+o5ylX0pq8S2uYZKnDOUSnbdKhP8ZjKfKLKExce82O9nM4qfIFJaLKJTzMYNtExA==
-  dependencies:
-    abitype "^0.8.3"
-    eventemitter3 "^5.0.1"
-    viem "^1.16.2"
-    zod "^3.22.4"
-
 "@babel/runtime@^7.17.2", "@babel/runtime@^7.21.0", "@babel/runtime@^7.23.2":
   version "7.23.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.2.tgz#062b0ac103261d68a966c4c7baf2ae3e62ec3885"
@@ -62,41 +52,51 @@
     dotenv "^16.0.3"
     ethereumjs-util "^7.1.0"
 
-"@biconomy/account@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@biconomy/account/-/account-3.1.0.tgz#9829e44d76e271ec7d85a6bb1dd53dbf3abfbba1"
-  integrity sha512-shyecaJa5IuNGe+V9o+bNcPmjWbpv6QMTj88Qe8Plz/eAAzILpIKT4s2Jt2KV2mebXRSp/RSgLICRMbeSsxPSw==
+"@biconomy-devx/account@2.0.25":
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/account/-/account-2.0.25.tgz#282f3dfbe2ba15b0d518300a7dc9dbf89368b15f"
+  integrity sha512-oWVLIBUX852ANwqCdiK97vt0GzENPL3eGnUl4eC78xIHyoJiOde02CHr/SzLezYUVvogUaaWbX5zBKNdgmrHXw==
   dependencies:
     "@account-abstraction/contracts" "^0.6.0"
     "@account-abstraction/utils" "^0.4.0"
     "@biconomy-devx/account-contracts-v2" "npm:@biconomy-devx/account-contracts-v2@^1.0.0"
-    "@biconomy/bundler" "^3.1.0"
-    "@biconomy/common" "^3.1.0"
-    "@biconomy/core-types" "^3.1.0"
-    "@biconomy/modules" "^3.1.0"
-    "@biconomy/node-client" "^3.1.0"
-    "@biconomy/paymaster" "^3.1.0"
+    "@biconomy-devx/bundler" "^2.0.25"
+    "@biconomy-devx/common" "^2.0.25"
+    "@biconomy-devx/core-types" "^2.0.25"
+    "@biconomy-devx/modules" "^2.0.25"
+    "@biconomy-devx/node-client" "^2.0.25"
+    "@biconomy-devx/paymaster" "^2.0.25"
     "@ethersproject/providers" "^5.7.2"
     ethers "^5.7.0"
 
-"@biconomy/bundler@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@biconomy/bundler/-/bundler-3.1.0.tgz#f1a46c3f16b3c4edcc96b5fa48a6513c24e03d2f"
-  integrity sha512-PS1pAYRX01sILgor8xs8NYkDR6xOCg+igY2dZop/MFz8ibfPluSjgsSXOOnf8InolMm4z5L6k0PcgsLCTjPDaw==
+"@biconomy-devx/bundler@2.0.25":
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/bundler/-/bundler-2.0.25.tgz#69d8add6e605c65895d5ba5cd5374381153af0ac"
+  integrity sha512-7aOCJdztQ7NV6WBxLhODXbgh+WrAS202rP+NkBx15eKU78wP4hJuao48K5O5TR9UJl0ufNozc7TYPoCkQbxYvA==
   dependencies:
-    "@biconomy/common" "^3.1.0"
-    "@biconomy/core-types" "^3.1.0"
+    "@biconomy-devx/common" "^2.0.25"
+    "@biconomy-devx/core-types" "^2.0.25"
     "@ethersproject/providers" "^5.7.2"
     ethers "^5.7.0"
 
-"@biconomy/common@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@biconomy/common/-/common-3.1.0.tgz#08e07ebe7d0e62a2dc52bc6aa1c7f07eec67667a"
-  integrity sha512-28uMOgMhitG0JhM4I48Kz5WPkc75qZ8LuS4X3mvuv6UpoojiVrWmh1pSA3PW+8LHreEsaopNVx0yfd1MzX534Q==
+"@biconomy-devx/bundler@^2.0.25":
+  version "2.0.42"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/bundler/-/bundler-2.0.42.tgz#63774375cffb9cb108b276721264595922271005"
+  integrity sha512-O6HCK1ApvE251O4Hf7SN8zwe39BtU+hq8ZcSBDoY931f9VNbRitUlT/uQLGiMbwUbLJXI0TGg9Q2FoIwFAmIng==
+  dependencies:
+    "@biconomy-devx/common" "^2.0.42"
+    "@biconomy-devx/core-types" "^2.0.42"
+    "@ethersproject/providers" "^5.7.2"
+    ethers "^5.7.0"
+
+"@biconomy-devx/common@2.0.25":
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/common/-/common-2.0.25.tgz#5e570d677df92f29f9ed36a838e431f2ff8aa682"
+  integrity sha512-6/xROtUZeR2BmEEZs8t+1iWm24N9O+CpXM7QPwwnbq5JijUNfHIdK9cZnZn/9e1JXa2QemaH7/A9zU2ejgxlGA==
   dependencies:
     "@account-abstraction/contracts" "^0.6.0"
-    "@biconomy/core-types" "^3.1.0"
-    "@biconomy/node-client" "^3.1.0"
+    "@biconomy-devx/core-types" "^2.0.25"
+    "@biconomy-devx/node-client" "^2.0.25"
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/bytes" "^5.7.0"
     "@ethersproject/providers" "^5.7.0"
@@ -107,10 +107,29 @@
     ethers "^5.7.0"
     typechain "^8.1.1"
 
-"@biconomy/core-types@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@biconomy/core-types/-/core-types-3.1.0.tgz#fe405c809155ef26b6f3557ae67af951d8ea552f"
-  integrity sha512-6daCXWxfT2Gl3pzUTvz0bpzXytBMt1CRFYmH5QiRv9nLrh9qVsjbJz1rWwdZOu0J90R5Ium5ssHpPFFoAIr58A==
+"@biconomy-devx/common@^2.0.25", "@biconomy-devx/common@^2.0.42":
+  version "2.0.42"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/common/-/common-2.0.42.tgz#25fc22e09949f237c89c1430cbf11027dc60631a"
+  integrity sha512-GrNwuhwycvL/B9Prxcg1wGaN4tq1z7C8mY7NUCkbyHCKejn8hZA18W2/7IO8UEJW9eetpDbgR32Bp3a7qjHT3Q==
+  dependencies:
+    "@account-abstraction/contracts" "^0.6.0"
+    "@biconomy-devx/core-types" "^2.0.42"
+    "@biconomy-devx/node-client" "^2.0.42"
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/bytes" "^5.7.0"
+    "@ethersproject/providers" "^5.7.0"
+    "@openzeppelin/contracts" "^4.7.3"
+    "@typechain/ethers-v5" "^10.2.0"
+    concurrently "^7.4.0"
+    debug "^4.3.4"
+    ethers "^5.7.0"
+    node-fetch "^2.7.0"
+    typechain "^8.1.1"
+
+"@biconomy-devx/core-types@2.0.25":
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/core-types/-/core-types-2.0.25.tgz#607ef279f79202685651577dc5fc1ab48fef7815"
+  integrity sha512-tJ/qVtoDqxyItRtEXrj6MJag9BDCHNJ5eglqJiv3DwSns//AUbFpEAUebqxue1gHUumlwgkWFueU3Ie+dM5tgw==
   dependencies:
     "@ethersproject/bignumber" "^5.6.0"
     "@ethersproject/contracts" "^5.6.0"
@@ -118,35 +137,69 @@
     ethers "^5.7.2"
     web3-core "^1.7.1"
 
-"@biconomy/modules@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@biconomy/modules/-/modules-3.1.0.tgz#817cd100df39021341839f6d2e9627380b54aed3"
-  integrity sha512-ySTsQgjMgEIAgt5xlhTcq6zJuEYWGlaPYxHeYDwrdHqDQz9iNVysqGncp/VluVX+KwV1zwTwt6p9LCgGg6TO+Q==
+"@biconomy-devx/core-types@^2.0.25", "@biconomy-devx/core-types@^2.0.42":
+  version "2.0.42"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/core-types/-/core-types-2.0.42.tgz#43b7f833350fad61d9852f11414cc2dc19e8c026"
+  integrity sha512-StHniWrRSGV+oJIcRQxIKWohVje/PADP3x+8vTj8BdvPFy0WXBhAQErgzPkxIvMJEwHJc5BciRGuBjv0z8hl6A==
   dependencies:
-    "@biconomy/common" "^3.1.0"
-    "@biconomy/core-types" "^3.1.0"
-    "@biconomy/node-client" "^3.1.0"
+    "@ethersproject/bignumber" "^5.6.0"
+    "@ethersproject/contracts" "^5.6.0"
+    "@ethersproject/providers" "^5.7.0"
+    ethers "^5.7.2"
+    web3-core "^1.7.1"
+
+"@biconomy-devx/modules@2.0.25":
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/modules/-/modules-2.0.25.tgz#0e6b4e694f6aeeb2a378f33cd241969209376cdd"
+  integrity sha512-BIslZVqcJ2+A5Ds9iU1Qs9sziyyh59gGgnoiZTtaxvGnehR7ANaoVBLLHbrr+ZamHIsUy+wckXtLMNMw3+K6cw==
+  dependencies:
+    "@biconomy-devx/common" "^2.0.25"
+    "@biconomy-devx/core-types" "^2.0.25"
+    "@biconomy-devx/node-client" "^2.0.25"
     ethereumjs-util "^7.1.5"
     ethers "^5.7.2"
     merkletreejs "^0.3.9"
 
-"@biconomy/node-client@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@biconomy/node-client/-/node-client-3.1.0.tgz#914a061bce2152971244202c257a4f3c5937d619"
-  integrity sha512-b2WCHjTRFlnERRapocf9C5vq8+1JoPsF18jADmPdEIUJueBe6cOEcvv0hGZc2P3gNHVJTtTziLFTxEKeM2WAFQ==
+"@biconomy-devx/modules@^2.0.25":
+  version "2.0.42"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/modules/-/modules-2.0.42.tgz#f9f258cf837aeb44aac941118343418c54f39fa6"
+  integrity sha512-s8OWfqfvFdhRvysGf6/DFA7BxdcfVEFNOLKx3GN+WNGzOWc5Vtcib500mQHzgZ0HHdE9vj/1yPYqcZs/u+rLzQ==
   dependencies:
-    "@biconomy/core-types" "^3.1.0"
+    "@biconomy-devx/common" "^2.0.42"
+    "@biconomy-devx/core-types" "^2.0.42"
+    "@biconomy-devx/node-client" "^2.0.42"
+    ethereumjs-util "^7.1.5"
+    ethers "^5.7.2"
+    merkletreejs "^0.3.9"
+
+"@biconomy-devx/node-client@^2.0.25", "@biconomy-devx/node-client@^2.0.42":
+  version "2.0.42"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/node-client/-/node-client-2.0.42.tgz#f074df597b27d69ee8a9c50eaf32ed05a03fff96"
+  integrity sha512-LRmw+WhVMP22Tv6KFql7XavtyiINdPYUBVmQ5NLHe/Hj3jzWlmwGQcdwu8bmVeuVjEPyXGmufHXbGYf5nRqsEQ==
+  dependencies:
+    "@biconomy-devx/core-types" "^2.0.42"
     "@ethersproject/abstract-signer" "^5.6.0"
     "@nomiclabs/hardhat-ethers" "^2.1.0"
     node-fetch "^2.6.6"
 
-"@biconomy/paymaster@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@biconomy/paymaster/-/paymaster-3.1.0.tgz#325f0f7f6fab2aa6863b9b092fa88d6d6e4e9514"
-  integrity sha512-m/0ATqQ1hb4G9dHzjhGukCTE82yv/CwwH6p9IM11dTxwvAKzYGeeOfqvmnzmy86ag0wYM1qwdo339mWwlwFJdQ==
+"@biconomy-devx/paymaster@2.0.25":
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/paymaster/-/paymaster-2.0.25.tgz#e5807efe62197e87ebc613b309cd747278a69fb4"
+  integrity sha512-B3LFx4/rFLQ2oIlZa+bQ059I6fGiQehWJpNHehUs3hf76Ng8ZQhddilvFqwdyIZ32KDMz6S946mIhTycXisA4Q==
   dependencies:
-    "@biconomy/common" "^3.1.0"
-    "@biconomy/core-types" "^3.1.0"
+    "@biconomy-devx/common" "^2.0.25"
+    "@biconomy-devx/core-types" "^2.0.25"
+    "@ethersproject/abstract-provider" "^5.7.0"
+    "@ethersproject/properties" "^5.7.0"
+    ethers "^5.7.0"
+
+"@biconomy-devx/paymaster@^2.0.25":
+  version "2.0.42"
+  resolved "https://registry.yarnpkg.com/@biconomy-devx/paymaster/-/paymaster-2.0.42.tgz#b25f8087f1a802768bfa854ac3a322e0a4ea0197"
+  integrity sha512-+zMwcjd8A/ymDmYAmT8Wo7glRR/Xumyh2w4Tvael+EnK5Lczc6op4NJy5+4nZ7lVe/Y75C+/6BdVJIv4A11HAQ==
+  dependencies:
+    "@biconomy-devx/common" "^2.0.42"
+    "@biconomy-devx/core-types" "^2.0.42"
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/properties" "^5.7.0"
     ethers "^5.7.0"
@@ -1615,11 +1668,6 @@ abitype@0.9.8:
   resolved "https://registry.yarnpkg.com/abitype/-/abitype-0.9.8.tgz#1f120b6b717459deafd213dfbf3a3dd1bf10ae8c"
   integrity sha512-puLifILdm+8sjyss4S+fsUN09obiT1g2YW6CtcQF+QDzxR0euzgEB29MZujC6zMk2a6SVmtttq1fc6+YFA7WYQ==
 
-abitype@^0.8.3:
-  version "0.8.11"
-  resolved "https://registry.yarnpkg.com/abitype/-/abitype-0.8.11.tgz#66e1cf2cbf46f48d0e57132d7c1c392447536cc1"
-  integrity sha512-bM4v2dKvX08sZ9IU38IN5BKmN+ZkOSd2oI4a9f0ejHYZQYV6cDr7j+d95ga0z2XHG36Y4jzoG5Z7qDqxp7fi/A==
-
 abortcontroller-polyfill@^1.7.5:
   version "1.7.5"
   resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.5.tgz#6738495f4e901fbb57b6c0611d0c75f76c485bed"
@@ -2886,11 +2934,6 @@ eventemitter3@^4.0.7:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
-eventemitter3@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
-  integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
-
 events@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
@@ -3911,7 +3954,7 @@ node-addon-api@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-2.0.2.tgz#432cfa82962ce494b132e9d72a15b29f71ff5d32"
   integrity sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==
 
-node-fetch@^2.6.12, node-fetch@^2.6.6:
+node-fetch@^2.6.12, node-fetch@^2.6.6, node-fetch@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
@@ -5032,7 +5075,7 @@ valtio@1.11.2:
     proxy-compare "2.5.1"
     use-sync-external-store "1.2.0"
 
-viem@^1.0.0, viem@^1.16.2, viem@^1.18.8:
+viem@^1.0.0, viem@^1.18.8:
   version "1.18.9"
   resolved "https://registry.yarnpkg.com/viem/-/viem-1.18.9.tgz#8be8fe3148b1c6c3bccc853001df98f91a8aeb30"
   integrity sha512-eAXtoTwAFA3YEgjTYMb5ZTQrDC0UPx5qyZ4sv90TirVKepcM9mBPksTkC1SSWya0UdxhBmhEBL/CiYMjmGCTWg==
@@ -5383,11 +5426,6 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
-
-zod@^3.22.4:
-  version "3.22.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
-  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
 
 zustand@^4.3.1:
   version "4.4.6"
