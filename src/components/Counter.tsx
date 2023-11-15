@@ -97,6 +97,7 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
 
   return (
     <>
+      {/* marking batched txn. */}
       {/* <TotalCountDisplay count={data} /> */}
       <div>Total count: {data?.toString()}</div>
       <br></br>
