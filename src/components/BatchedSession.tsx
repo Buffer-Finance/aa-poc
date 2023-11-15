@@ -196,7 +196,7 @@ const CreateBatchRouter: React.FC<{
       <ERC20Transfer
         smartAccount={smartAccount}
         provider={provider}
-        address={scwAddress}
+        scwAddress={scwAddress}
       />
       {isSessionKeyModuleEnabled && isBRMenabled ? (
         <div>

@@ -12,20 +12,19 @@ import { erc20ABI } from "wagmi";
 interface props {
   smartAccount: BiconomySmartAccountV2;
   provider: ethers.providers.Provider;
-  address: string;
+  scwAddress: string;
 }
 
 const ERC20Transfer: React.FC<props> = ({
   smartAccount,
   provider,
-  address,
+  scwAddress,
 }) => {
   const erc20Transfer = async () => {
-    if (!address || !smartAccount || !address) {
+    if (!scwAddress || !smartAccount) {
       // showErrorMessage("Please connect wallet first");
       return;
     }
-    console.log(`ERC30Transfer-address: `, address);
     try {
       // setLoading(true);
       let biconomySmartAccount = smartAccount;
@@ -49,12 +48,12 @@ const ERC20Transfer: React.FC<props> = ({
       // generate sessionModule
       const sessionModule = await SessionKeyManagerModule.create({
         moduleAddress: managerModuleAddr,
-        smartAccountAddress: address,
+        smartAccountAddress: scwAddress,
       });
       const sessionRouterModule = await BatchedSessionRouterModule.create({
         moduleAddress: routerModuleAddr,
         sessionKeyManagerModule: sessionModule,
-        smartAccountAddress: address,
+        smartAccountAddress: scwAddress,
       });
 
       // set active module to sessionRouterModule
@@ -139,15 +138,8 @@ const ERC20Transfer: React.FC<props> = ({
       console.log("userOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
       console.log("txHash", receipt.transactionHash);
-      // showSuccessMessage(
-      //   `ERC20 Transfer ${receipt.transactionHash}`,
-      //   receipt.transactionHash
-      // );
-      // setLoading(false);
     } catch (err: any) {
       console.error(err);
-      // setLoading(false);
-      // showErrorMessage(err.message || "Error in sending the transaction");
     }
   };
 
