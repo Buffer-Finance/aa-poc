@@ -81,11 +81,7 @@ const CreateBatchRouter: React.FC<{
       const sessionKeyEOA = await sessionSigner.getAddress();
       console.log("sessionKeyEOA", sessionKeyEOA);
       // BREWARE JUST FOR DEMO: update local storage with session key
-      window.localStorage.setItem(
-        "sessionPKey-batched",
-        sessionSigner.privateKey
-      );
-      console.log("sessionPKey-batched", sessionSigner.privateKey);
+      window.localStorage.setItem("sessionPKey", sessionSigner.privateKey);
 
       // generate sessionModule
       const sessionModule = await SessionKeyManagerModule.create({
@@ -105,7 +101,7 @@ const CreateBatchRouter: React.FC<{
         [
           sessionKeyEOA,
           "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
-          "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6", // receiver address
+          "0x42138576848E839827585A3539305774D36B9602", // receiver address
           ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
         ]
       );

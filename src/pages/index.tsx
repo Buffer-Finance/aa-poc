@@ -17,6 +17,7 @@ import {
 import {
   ECDSAOwnershipValidationModule,
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
+  MultiChainValidationModule,
 } from "@biconomy-devx/modules";
 import { ChainId } from "@biconomy-devx/core-types";
 import { IPaymaster, BiconomyPaymaster } from "@biconomy-devx/paymaster";
@@ -47,7 +48,7 @@ export default function Home() {
   const [smartAccountAddress, setSmartAccountAddress] = useState();
   const [biconomyAccount, setBiconomyAccount] =
     useState<BiconomySmartAccountV2 | null>(null);
-  const bundler: IBundler = new Bundler({
+  const bundler = new Bundler({
     bundlerUrl: `https://bundler.biconomy.io/api/v2/${ChainId.POLYGON_MUMBAI}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
     chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
@@ -61,17 +62,18 @@ export default function Home() {
   const createv2SmartAccount = async () => {
     if (!walletClient) return;
     // const signer = new WalletClientSigner(walletClient, "json-rpc");
-    const ecdsaModule = await ECDSAOwnershipValidationModule.create({
+
+    const multiChainModule = await MultiChainValidationModule.create({
       signer: walletClientToSigner(walletClient),
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+      moduleAddress: "0x000000824dc138db84FD9109fc154bdad332Aa8E",
     });
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
       chainId: ChainId.POLYGON_MUMBAI,
-      bundler: bundler,
+      bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: ecdsaModule,
-      activeValidationModule: ecdsaModule,
+      defaultValidationModule: multiChainModule,
+      activeValidationModule: multiChainModule,
     });
     console.log(biconomySmartAccount);
     setBiconomyAccount(biconomySmartAccount);
@@ -84,23 +86,7 @@ export default function Home() {
     address: "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6",
   });
   console.log("1ct balance", data);
-  const createv1SmartAccount = async () => {
-    if (!walletClient) return;
-    const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-      signer: walletClientToSigner(walletClient),
-      chainId: ChainId.POLYGON_MUMBAI,
-      bundler: bundler,
-      paymaster: paymaster,
-    };
-    let biconomySmartAccount = new BiconomySmartAccount(
-      biconomySmartAccountConfig
-    );
-    biconomySmartAccount = await biconomySmartAccount.init();
 
-    setBiconomyAccount(biconomySmartAccount);
-    const addres = await biconomySmartAccount.getSmartAccountAddress();
-    set;
-  };
   const steps = [
     "Connect Metamask",
     "Create Smart Account. Now you can interact gaslessly",
