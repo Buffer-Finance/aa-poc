@@ -3,6 +3,8 @@ import { ethers } from "ethers";
 import {
   SessionKeyManagerModule,
   DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  BatchedSessionRouterModule,
+  DEFAULT_BATCHED_SESSION_ROUTER_MODULE,
 } from "@biconomy/modules";
 import {
   BiconomySmartAccount,
@@ -54,7 +56,7 @@ const Session: React.FC<{
       alert("Please connect wallet first");
     }
     try {
-      const erc20ModuleAddr = "0x000000D50C68705bd6897B2d17c7de32FB519fDA";
+      const erc20ModuleAddr = "0x7Ba4a7338D7A90dfA465cF975Cc6691812C3772E";
       // -----> setMerkle tree tx flow
       // create dapp side session key
       const sessionSigner = ethers.Wallet.createRandom();
@@ -62,10 +64,16 @@ const Session: React.FC<{
       console.log("sessionKeyEOA", sessionKeyEOA);
       // BREWARE JUST FOR DEMO: update local storage with session key
       window.localStorage.setItem("sessionPKey", sessionSigner.privateKey);
+      const routerModuleAddr = DEFAULT_BATCHED_SESSION_ROUTER_MODULE;
 
       // generate sessionModule
       const sessionModule = await SessionKeyManagerModule.create({
         moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
+        smartAccountAddress: address,
+      });
+      const sessionRouterModule = await BatchedSessionRouterModule.create({
+        moduleAddress: routerModuleAddr,
+        sessionKeyManagerModule: sessionModule,
         smartAccountAddress: address,
       });
 

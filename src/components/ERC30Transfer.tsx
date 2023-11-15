@@ -1,8 +1,12 @@
 import React from "react";
 import { ethers } from "ethers";
-import { SessionKeyManagerModule } from "@biconomy/modules";
 import { BiconomySmartAccountV2 } from "@biconomy/account";
-import { DEFAULT_SESSION_KEY_MANAGER_MODULE } from "@biconomy/modules";
+import {
+  SessionKeyManagerModule,
+  DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  BatchedSessionRouterModule,
+  DEFAULT_BATCHED_SESSION_ROUTER_MODULE,
+} from "@biconomy/modules";
 import { erc20ABI } from "wagmi";
 
 interface props {
@@ -22,7 +26,7 @@ const ERC20Transfer: React.FC<props> = ({
       return;
     }
     try {
-      const erc20ModuleAddr = "0x000000D50C68705bd6897B2d17c7de32FB519fDA";
+      const erc20ModuleAddr = "0x7Ba4a7338D7A90dfA465cF975Cc6691812C3772E";
 
       const sessionKeyPrivKey = window.localStorage.getItem("sessionPKey");
       console.log("sessionKeyPrivKey", sessionKeyPrivKey);
@@ -32,15 +36,22 @@ const ERC20Transfer: React.FC<props> = ({
       }
       const sessionSigner = new ethers.Wallet(sessionKeyPrivKey);
       console.log("sessionSigner", sessionSigner);
+      const routerModuleAddr = DEFAULT_BATCHED_SESSION_ROUTER_MODULE;
 
       // generate sessionModule
       const sessionModule = await SessionKeyManagerModule.create({
         moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
         smartAccountAddress: address,
       });
+      const sessionRouterModule = await BatchedSessionRouterModule.create({
+        moduleAddress: routerModuleAddr,
+        sessionKeyManagerModule: sessionModule,
+        smartAccountAddress: address,
+      });
 
       // set active module to sessionModule
-      smartAccount = smartAccount.setActiveValidationModule(sessionModule);
+      smartAccount =
+        smartAccount.setActiveValidationModule(sessionRouterModule);
 
       const tokenContract = new ethers.Contract(
         // polygon mumbai usdc address
@@ -70,7 +81,7 @@ const ERC20Transfer: React.FC<props> = ({
       };
 
       // build user op
-      let userOp = await smartAccount.buildUserOp([tx1], {
+      let userOp = await smartAccount.buildUserOp([tx1, tx1], {
         overrides: {
           // signature: "0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000456b395c4e107e0302553b90d1ef4a32e9000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000db3d753a1da5a6074a9f74f39a0a779d3300000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001800000000000000000000000000000000000000000000000000000000000000080000000000000000000000000bfe121a6dcf92c49f6c2ebd4f306ba0ba0ab6f1c000000000000000000000000da5289fcaaf71d52a80a254da614a192b693e97700000000000000000000000042138576848e839827585a3539305774d36b96020000000000000000000000000000000000000000000000000000000002faf08000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041feefc797ef9e9d8a6a41266a85ddf5f85c8f2a3d2654b10b415d348b150dabe82d34002240162ed7f6b7ffbc40162b10e62c3e35175975e43659654697caebfe1c00000000000000000000000000000000000000000000000000000000000000"
           // callGasLimit: 2000000, // only if undeployed account
@@ -80,6 +91,17 @@ const ERC20Transfer: React.FC<props> = ({
         params: {
           sessionSigner: sessionSigner,
           sessionValidationModule: erc20ModuleAddr,
+          batchSessionParams: [
+            {
+              sessionSigner: sessionSigner,
+              // sessionID: "67e910ef2c", // only require session id filter when multiple leafs have same SVM
+              sessionValidationModule: erc20ModuleAddr,
+            },
+            {
+              sessionSigner: sessionSigner,
+              sessionValidationModule: erc20ModuleAddr,
+            },
+          ],
         },
       });
       console.log(`2[transfer]userOp: `, userOp);
@@ -88,6 +110,17 @@ const ERC20Transfer: React.FC<props> = ({
       const userOpResponse = await smartAccount.sendUserOp(userOp, {
         sessionSigner: sessionSigner,
         sessionValidationModule: erc20ModuleAddr,
+        batchSessionParams: [
+          {
+            sessionSigner: sessionSigner,
+            // sessionID: "67e910ef2c", // only require session id filter when multiple leafs have same SVM
+            sessionValidationModule: erc20ModuleAddr,
+          },
+          {
+            sessionSigner: sessionSigner,
+            sessionValidationModule: erc20ModuleAddr,
+          },
+        ],
       });
       console.log(`3[transfer]userOpResponse: `, userOpResponse);
 
