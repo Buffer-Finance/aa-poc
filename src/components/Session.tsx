@@ -11,52 +11,65 @@ import {
   BiconomySmartAccountV2,
 } from "@biconomy/account";
 import { defaultAbiCoder } from "ethers/lib/utils";
-import { erc20ABI } from "wagmi";
+import { erc20ABI, useAccount } from "wagmi";
 import ERC20Transfer from "./ERC30Transfer";
 console.log(erc20ABI);
 const Session: React.FC<{
   smartAccount: BiconomySmartAccountV2;
-  address: string;
+  scwAddress: string;
   provider: any;
-}> = ({ smartAccount, address, provider }) => {
+}> = ({ smartAccount, scwAddress, provider }) => {
+  const { address } = useAccount();
   const [isSessionKeyModuleEnabled, setIsSessionKeyModuleEnabled] = useState<
     boolean | null
   >(null);
   // smartAccount.getAccountAddress();
 
   const [isSessionActive, setIsSessionActive] = useState<boolean>(false);
+  const [isBRMenabled, setIsBRMenabled] = useState(false);
+
   useEffect(() => {
     let checkSessionModuleEnabled = async () => {
-      if (!address || !smartAccount) {
+      if (!scwAddress || !smartAccount || !address) {
         setIsSessionKeyModuleEnabled(false);
         return;
       }
       try {
-        // ATTENTION, isModuleEnabled  - a very important function is not available on smartAccount
-        console.log(
-          "isSessionKeyModuleEnabled",
-          await smartAccount.getAccountAddress()
-        );
-        const isEnabled = await smartAccount?.isModuleEnabled(
+        let biconomySmartAccount = smartAccount;
+        const isEnabled1 = await biconomySmartAccount.isModuleEnabled(
           DEFAULT_SESSION_KEY_MANAGER_MODULE
         );
-
-        setIsSessionKeyModuleEnabled(isEnabled);
+        setIsSessionKeyModuleEnabled(isEnabled1);
+        const isEnabled2 = await biconomySmartAccount.isModuleEnabled(
+          DEFAULT_BATCHED_SESSION_ROUTER_MODULE
+        );
+        setIsBRMenabled(isEnabled2);
+        console.log(
+          "isSessionKeyModuleEnabled, setIsBRMenabled",
+          isEnabled1,
+          isEnabled2
+        );
         return;
       } catch (err: any) {
-        console.log("error whilegettingdefault ", err);
+        console.error(err);
         setIsSessionKeyModuleEnabled(false);
         return;
       }
     };
     checkSessionModuleEnabled();
-  }, [isSessionKeyModuleEnabled, address, smartAccount]);
-  const createSession = async (enableSessionKeyModule: boolean) => {
-    if (!address || !smartAccount) {
-      alert("Please connect wallet first");
+  }, [isSessionKeyModuleEnabled, scwAddress, smartAccount, address]);
+  const createSession = async (enableModule: boolean) => {
+    if (!scwAddress || !smartAccount || !address) {
+      return;
     }
     try {
-      const erc20ModuleAddr = "0x7Ba4a7338D7A90dfA465cF975Cc6691812C3772E";
+      let biconomySmartAccount = smartAccount;
+      const managerModuleAddr = DEFAULT_SESSION_KEY_MANAGER_MODULE;
+      const routerModuleAddr = DEFAULT_BATCHED_SESSION_ROUTER_MODULE;
+      const erc20ModuleAddr = "0x000000D50C68705bd6897B2d17c7de32FB519fDA";
+      const mockSessionModuleAddr =
+        "0x7Ba4a7338D7A90dfA465cF975Cc6691812C3772E";
+
       // -----> setMerkle tree tx flow
       // create dapp side session key
       const sessionSigner = ethers.Wallet.createRandom();
@@ -64,17 +77,17 @@ const Session: React.FC<{
       console.log("sessionKeyEOA", sessionKeyEOA);
       // BREWARE JUST FOR DEMO: update local storage with session key
       window.localStorage.setItem("sessionPKey", sessionSigner.privateKey);
-      const routerModuleAddr = DEFAULT_BATCHED_SESSION_ROUTER_MODULE;
 
       // generate sessionModule
       const sessionModule = await SessionKeyManagerModule.create({
-        moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
-        smartAccountAddress: address,
+        moduleAddress: managerModuleAddr,
+        smartAccountAddress: scwAddress,
       });
+
       const sessionRouterModule = await BatchedSessionRouterModule.create({
         moduleAddress: routerModuleAddr,
         sessionKeyManagerModule: sessionModule,
-        smartAccountAddress: address,
+        smartAccountAddress: scwAddress,
       });
 
       // cretae session key data
@@ -84,10 +97,18 @@ const Session: React.FC<{
           sessionKeyEOA,
           "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
           "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6", // receiver address
-          ethers.utils.parseUnits("5".toString(), 6).toHexString(), // 50 usdc amount
+          ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
         ]
       );
-      console.log(`1Session-sessionKeyData: `, sessionKeyData);
+      /*const sessionKeyData2 = defaultAbiCoder.encode(
+        ["address", "address", "address", "uint256"],
+        [
+          sessionKeyEOA,
+          "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
+          "0x5a86A87b3ea8080Ff0B99820159755a4422050e6", // receiver address 2
+          ethers.utils.parseUnits("100".toString(), 6).toHexString(),
+        ]
+      );*/
 
       const sessionTxData = await sessionRouterModule.createSessionData([
         {
@@ -97,37 +118,58 @@ const Session: React.FC<{
           sessionPublicKey: sessionKeyEOA,
           sessionKeyData: sessionKeyData,
         },
+        {
+          validUntil: 0,
+          validAfter: 0,
+          sessionValidationModule: mockSessionModuleAddr,
+          sessionPublicKey: sessionKeyEOA,
+          sessionKeyData: sessionKeyData,
+        },
       ]);
-      console.log("2sessionTxData", sessionTxData);
+      console.log("sessionTxData", sessionTxData);
 
-      // write a programe using wagmi hooks to send some erc20 tokens
       // tx to set session key
-      const setSessiontrx = {
-        to: DEFAULT_SESSION_KEY_MANAGER_MODULE, // session manager module address
+      const tx3 = {
+        to: managerModuleAddr, // session manager module address
         data: sessionTxData.data,
       };
 
-      const transactionArray = [];
-
-      if (enableSessionKeyModule) {
+      let transactionArray = [];
+      if (!isSessionKeyModuleEnabled) {
         // -----> enableModule session manager module
-        const enableModuleTrx = await smartAccount.getEnableModuleData(
-          DEFAULT_SESSION_KEY_MANAGER_MODULE
+        const tx1 = await biconomySmartAccount.getEnableModuleData(
+          managerModuleAddr
         );
-        transactionArray.push(enableModuleTrx);
+        transactionArray.push(tx1);
       }
-
-      transactionArray.push(setSessiontrx);
-      console.log(`3Session-transactionArray: `, transactionArray);
-
-      let partialUserOp = await smartAccount.buildUserOp(transactionArray);
-      console.log(`4Session-partialUserOp: `, partialUserOp);
+      if (!isBRMenabled) {
+        // -----> enableModule batched session router module
+        const tx2 = await biconomySmartAccount.getEnableModuleData(
+          routerModuleAddr
+        );
+        transactionArray.push(tx2);
+      }
+      transactionArray.push(tx3);
+      let partialUserOp = await biconomySmartAccount.buildUserOp(
+        transactionArray,
+        {
+          skipBundlerGasEstimation: false,
+        }
+      );
 
       const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
-      console.log(`5userOp Hash: ${userOpResponse.userOpHash}`);
-      const transactionDetails = await userOpResponse.wait();
-      console.log("6txHash", transactionDetails.receipt.transactionHash);
-      setIsSessionActive(true);
+      console.log("userOpHash", userOpResponse);
+      const { transactionHash } = await userOpResponse.waitForTxHash();
+      console.log("txHash", transactionHash);
+
+      // update the session key //enableModule
+      /*await sessionRouterModule.updateSessionStatus(
+        {
+          sessionPublicKey: sessionKeyEOA,
+          sessionValidationModule: erc20ModuleAddr,
+        },
+        "ACTIVE"
+      );*/
     } catch (err: any) {
       console.error(err);
     }
@@ -155,7 +197,7 @@ const Session: React.FC<{
       <ERC20Transfer
         smartAccount={smartAccount}
         provider={provider}
-        address={address}
+        scwAddress={scwAddress}
       />
       {isSessionKeyModuleEnabled && <div></div>}
     </div>

@@ -18,10 +18,12 @@ import {
   ECDSAOwnershipValidationModule,
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
 } from "@biconomy/modules";
+import { MultiChainValidationModule } from "@biconomy/modules";
+
 import { ChainId } from "@biconomy/core-types";
 import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
 import { IBundler, Bundler } from "@biconomy/bundler";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Counter from "@/components/Counter";
 import Session from "@/components/Session";
 import { SendTokens } from "@/components/Send";
@@ -58,20 +60,24 @@ export default function Home() {
   });
 
   const createv2SmartAccount = async () => {
+    console.log(`index-walletClient: `, walletClient);
     if (!walletClient) return;
     // const signer = new WalletClientSigner(walletClient, "json-rpc");
-    const ecdsaModule = await ECDSAOwnershipValidationModule.create({
+    const multiChainModule = await MultiChainValidationModule.create({
       signer: walletClientToSigner(walletClient),
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+      moduleAddress: "0x000000824dc138db84FD9109fc154bdad332Aa8E",
     });
+    console.time(address + "time req");
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
       chainId: ChainId.POLYGON_MUMBAI,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: ecdsaModule,
-      activeValidationModule: ecdsaModule,
+      defaultValidationModule: multiChainModule,
+      activeValidationModule: multiChainModule,
     });
+    console.timeEnd(address + "time req");
+
     console.log(biconomySmartAccount);
     setBiconomyAccount(biconomySmartAccount);
     const smartAddressTemporary =
@@ -105,6 +111,10 @@ export default function Home() {
     "Create Smart Account. Now you can interact gaslessly",
     "Create Session Keys for better no-click UX (Gas needed in Smart account)",
   ];
+  useEffect(() => {
+    console.log(`index-address: `, address);
+    if (walletClient) createv2SmartAccount();
+  }, [walletClient]);
   return (
     <>
       <main className={""}>
@@ -138,10 +148,10 @@ export default function Home() {
           </button>
         )}
         <div>------------------</div>
-        {biconomyAccount && (
+        {biconomyAccount && smartAccountAddress && walletClient && (
           <Session
             smartAccount={biconomyAccount}
-            address={address}
+            scwAddress={smartAccountAddress}
             provider={walletClientToSigner(walletClient)}
           />
         )}
