@@ -89,7 +89,7 @@ const Session: React.FC<{
       );
       console.log(`1Session-sessionKeyData: `, sessionKeyData);
 
-      const sessionTxData = await sessionModule.createSessionData([
+      const sessionTxData = await sessionRouterModule.createSessionData([
         {
           validUntil: 0,
           validAfter: 0,
