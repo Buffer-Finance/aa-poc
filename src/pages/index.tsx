@@ -125,7 +125,7 @@ export default function Home() {
         )}
         <ol>
           {steps.map((d) => (
-            <li>{d}</li>
+            <li key={d}>{d}</li>
           ))}
         </ol>
         {connectors.map((connector) => (
