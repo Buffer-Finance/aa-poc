@@ -50,7 +50,7 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
         to: counterAddress,
         data: data,
       };
-      let userOp = await smartAccount?.buildUserOp([tx1, tx1]);
+      let userOp = await smartAccount?.buildUserOp([tx1]);
       console.log("UserOp", { userOp });
       const biconomyPaymaster =
         smartAccount?.paymaster as IHybridPaymaster<SponsorUserOperationDto>;

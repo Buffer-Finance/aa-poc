@@ -104,7 +104,6 @@ export default function Home() {
 
     setBiconomyAccount(biconomySmartAccount);
     const addres = await biconomySmartAccount.getSmartAccountAddress();
-    set;
   };
   const steps = [
     "Connect Metamask",
