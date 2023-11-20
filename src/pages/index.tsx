@@ -128,24 +128,25 @@ export default function Home() {
             <li key={d}>{d}</li>
           ))}
         </ol>
-        {connectors.map((connector) => (
-          <button key={connector.id} onClick={() => connect({ connector })}>
-            {connector.name}
-            {isLoading &&
-              connector.id === pendingConnector?.id &&
-              " (connecting)"}
-          </button>
-        ))}
+        {!address &&
+          connectors.map((connector) => (
+            <button key={connector.id} onClick={() => connect({ connector })}>
+              {connector.name}
+              {isLoading &&
+                connector.id === pendingConnector?.id &&
+                " (connecting)"}
+            </button>
+          ))}
         {error && <div>{error.message}</div>}
         {isConnected && <button onClick={disconnect}>Disconnect</button>}
-        {isConnected && (
+        {/* {isConnected && (
           <button
             // onClick={createv1SmartAccount}
             onClick={createv2SmartAccount}
           >
             Create Smart Account
           </button>
-        )}
+        )} */}
         <div>------------------</div>
         {biconomyAccount && smartAccountAddress && walletClient && (
           <Session
