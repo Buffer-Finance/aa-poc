@@ -124,7 +124,7 @@ const Session: React.FC<{
       try {
         decimals = await tokenContract.decimals();
       } catch (error) {
-        throw new Error("invalid token address supplied");
+        console.error(error);
       }
       const amountGwei = ethers.utils.parseUnits("1".toString(), decimals);
       // sender - 0x109b9198ea5e58375e4936DF393F7CBa8F65945E // 21
@@ -202,7 +202,7 @@ const Session: React.FC<{
 
       console.log("send-txnuserOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
-      console.log(`Session-receipt: `, receipt);
+      console.log(`send-txn reciept: `, receipt);
       setFullLoading("off");
     } catch (err: any) {
       console.error(err);
@@ -305,7 +305,7 @@ const Session: React.FC<{
 
       const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
       console.time("wait");
-      await sleep(3000);
+      await sleep(5000);
       console.log("userOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
       console.log(`Session-receipt: `, receipt);
