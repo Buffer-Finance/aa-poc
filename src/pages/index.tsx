@@ -105,11 +105,7 @@ export default function Home() {
     setBiconomyAccount(biconomySmartAccount);
     const addres = await biconomySmartAccount.getSmartAccountAddress();
   };
-  const steps = [
-    "Connect Metamask",
-    "Create Smart Account. Now you can interact gaslessly",
-    "Create Session Keys for better no-click UX (Gas needed in Smart account)",
-  ];
+  const steps = ["Connect Metamask", "Click on transfer"];
   useEffect(() => {
     console.log(`index-address: `, address);
     if (walletClient) createv2SmartAccount();
