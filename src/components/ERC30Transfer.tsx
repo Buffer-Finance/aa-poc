@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ethers } from "ethers";
 import { BiconomySmartAccountV2 } from "@biconomy/account";
 import {
@@ -13,12 +13,14 @@ interface props {
   smartAccount: BiconomySmartAccountV2;
   provider: ethers.providers.Provider;
   scwAddress: string;
+  count: number;
 }
 
 const ERC20Transfer: React.FC<props> = ({
   smartAccount,
   provider,
   scwAddress,
+  count,
 }) => {
   const { address } = useAccount();
   const erc20Transfer = async () => {
@@ -151,6 +153,9 @@ const ERC20Transfer: React.FC<props> = ({
       console.error(err);
     }
   };
+  useEffect(() => {
+    if (count) erc20Transfer();
+  }, [count]);
 
   return <button onClick={erc20Transfer}>Transfer 1 USDC</button>;
 };
