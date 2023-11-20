@@ -27,6 +27,9 @@ import { useEffect, useState } from "react";
 import Counter from "@/components/Counter";
 import Session from "@/components/Session";
 import { SendTokens } from "@/components/Send";
+import TransferWOSession from "./TransferWOSession";
+import TransferWOSessionSponsored from "./TransferWOSessionSponsored";
+import TransferWOSessionSponsoredUSDC from "./TransferWOSessionSponsoredUSDC";
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient;
   const network = {
@@ -145,13 +148,30 @@ export default function Home() {
         )} */}
         <div>------------------</div>
         {biconomyAccount && smartAccountAddress && walletClient && (
-          <Session
-            smartAccount={biconomyAccount}
-            scwAddress={smartAccountAddress}
-            provider={walletClientToSigner(walletClient)}
-          />
+          <>
+            <Session
+              smartAccount={biconomyAccount}
+              scwAddress={smartAccountAddress}
+              provider={walletClientToSigner(walletClient)}
+            />
+            <TransferWOSession
+              smartAccount={biconomyAccount}
+              scwAddress={smartAccountAddress}
+              provider={walletClientToSigner(walletClient)}
+            />
+            <TransferWOSessionSponsored
+              smartAccount={biconomyAccount}
+              scwAddress={smartAccountAddress}
+              provider={walletClientToSigner(walletClient)}
+            />
+
+            <TransferWOSessionSponsoredUSDC
+              smartAccount={biconomyAccount}
+              scwAddress={smartAccountAddress}
+              provider={walletClientToSigner(walletClient)}
+            />
+          </>
         )}
-        {/* <SendTokens /> */}
       </main>
     </>
   );

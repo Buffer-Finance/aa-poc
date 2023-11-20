@@ -12,7 +12,6 @@ import {
 } from "@biconomy/account";
 import { defaultAbiCoder } from "ethers/lib/utils";
 import { erc20ABI, useAccount, useBalance } from "wagmi";
-import ERC20Transfer from "./ERC30Transfer";
 console.log(erc20ABI);
 const sleep = async (sec: number) =>
   setTimeout(() => {
