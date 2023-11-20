@@ -120,9 +120,9 @@ export default function Home() {
         <div>Counter Contract POC</div>
         {address && <h2>EOA: {address}</h2>}
         {smartAccountAddress && <h2>Smart Account: {smartAccountAddress}</h2>}
-        {biconomyAccount && (
+        {/* {biconomyAccount && (
           <Counter smartAccount={biconomyAccount} provider={""} />
-        )}
+        )} */}
         <ol>
           {steps.map((d) => (
             <li key={d}>{d}</li>
