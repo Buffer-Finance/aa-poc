@@ -34,10 +34,6 @@ const TransferWOSession: React.FC<{
     address: scwAddress,
     watch: true,
   });
-  const [pk, setPk] = useState(
-    typeof window !== "undefined" &&
-      window.localStorage.getItem("sessionPKey" + scwAddress)
-  );
 
   const { data: receiverBalance } = useBalance({
     token: "0xdA5289fCAAF71d52a80A254da614a192b693e977",
