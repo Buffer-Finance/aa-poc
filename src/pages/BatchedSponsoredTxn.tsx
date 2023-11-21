@@ -40,7 +40,8 @@ const SponsoredBatchedTxn: React.FC<{
     watch: true,
   });
   const [pk, setPk] = useState(
-    window.localStorage.getItem("sessionPKey" + scwAddress)
+    typeof window !== "undefined" &&
+      window.localStorage.getItem("sessionPKey" + scwAddress)
   );
 
   const { data: receiverBalance } = useBalance({
