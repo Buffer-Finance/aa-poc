@@ -30,6 +30,8 @@ import { SendTokens } from "@/components/Send";
 import TransferWOSession from "./TransferWOSession";
 import TransferWOSessionSponsored from "./TransferWOSessionSponsored";
 import TransferWOSessionSponsoredUSDC from "./TransferWOSessionSponsoredUSDC";
+import SessionSponsored from "./SessionSponsored";
+import SponsoredSessionCreation from "./SessionSponsored";
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient;
   const network = {
@@ -166,6 +168,11 @@ export default function Home() {
             />
 
             <TransferWOSessionSponsoredUSDC
+              smartAccount={biconomyAccount}
+              scwAddress={smartAccountAddress}
+              provider={walletClientToSigner(walletClient)}
+            />
+            <SponsoredSessionCreation
               smartAccount={biconomyAccount}
               scwAddress={smartAccountAddress}
               provider={walletClientToSigner(walletClient)}
