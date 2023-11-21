@@ -33,6 +33,7 @@ import TransferWOSessionSponsoredUSDC from "./TransferWOSessionSponsoredUSDC";
 import SessionSponsored from "./SessionSponsored";
 import SponsoredSessionCreation from "./SessionSponsored";
 import SponsoredBatchedTxn from "./BatchedSponsoredTxn";
+import USDCSponsoredBatchedTransaction from "./USDCSponsoredBatchedTransaction";
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient;
   const network = {
@@ -162,7 +163,12 @@ export default function Home() {
               scwAddress={smartAccountAddress}
               provider={walletClientToSigner(walletClient)}
             /> */}
-            <SponsoredBatchedTxn
+            {/* <SponsoredBatchedTxn
+              smartAccount={biconomyAccount}
+              scwAddress={smartAccountAddress}
+              provider={walletClientToSigner(walletClient)}
+            /> */}
+            <USDCSponsoredBatchedTransaction
               smartAccount={biconomyAccount}
               scwAddress={smartAccountAddress}
               provider={walletClientToSigner(walletClient)}
