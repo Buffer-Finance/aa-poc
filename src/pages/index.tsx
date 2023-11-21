@@ -32,6 +32,7 @@ import TransferWOSessionSponsored from "./TransferWOSessionSponsored";
 import TransferWOSessionSponsoredUSDC from "./TransferWOSessionSponsoredUSDC";
 import SessionSponsored from "./SessionSponsored";
 import SponsoredSessionCreation from "./SessionSponsored";
+import SponsoredBatchedTxn from "./BatchedSponsoredTxn";
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient;
   const network = {
@@ -93,23 +94,7 @@ export default function Home() {
     token: "0xdA5289fCAAF71d52a80A254da614a192b693e977",
     address: "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6",
   });
-  console.log("1ct balance", data);
-  const createv1SmartAccount = async () => {
-    if (!walletClient) return;
-    const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-      signer: walletClientToSigner(walletClient),
-      chainId: ChainId.POLYGON_MUMBAI,
-      bundler: bundler,
-      paymaster: paymaster,
-    };
-    let biconomySmartAccount = new BiconomySmartAccount(
-      biconomySmartAccountConfig
-    );
-    biconomySmartAccount = await biconomySmartAccount.init();
 
-    setBiconomyAccount(biconomySmartAccount);
-    const addres = await biconomySmartAccount.getSmartAccountAddress();
-  };
   const steps = ["Connect Metamask", "Click on transfer"];
   useEffect(() => {
     console.log(`index-address: `, address);
@@ -151,7 +136,7 @@ export default function Home() {
         <div>------------------</div>
         {biconomyAccount && smartAccountAddress && walletClient && (
           <>
-            <Session
+            {/* <Session
               smartAccount={biconomyAccount}
               scwAddress={smartAccountAddress}
               provider={walletClientToSigner(walletClient)}
@@ -171,8 +156,13 @@ export default function Home() {
               smartAccount={biconomyAccount}
               scwAddress={smartAccountAddress}
               provider={walletClientToSigner(walletClient)}
-            />
-            <SponsoredSessionCreation
+            /> */}
+            {/* <SponsoredSessionCreation
+              smartAccount={biconomyAccount}
+              scwAddress={smartAccountAddress}
+              provider={walletClientToSigner(walletClient)}
+            /> */}
+            <SponsoredBatchedTxn
               smartAccount={biconomyAccount}
               scwAddress={smartAccountAddress}
               provider={walletClientToSigner(walletClient)}
