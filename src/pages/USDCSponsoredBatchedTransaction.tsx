@@ -432,6 +432,18 @@ const USDCSponsoredBatchedTransaction: React.FC<{
         }
         onClick={createSession}
       >
+        Create session and Transfer 0.1 + 0.1 USDC (sponsored sessions USDC)
+      </button>
+      <button
+        title={
+          fullLoading == "off"
+            ? "  Click to transfer"
+            : fullLoading == "prereq"
+            ? "Please wait till MM confirmation comes"
+            : "Transaction is in process"
+        }
+        onClick={erc20Transfer}
+      >
         Transfer 0.1 + 0.1 USDC (sponsored sessions USDC)
       </button>
     </div>
