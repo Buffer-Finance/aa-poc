@@ -22,7 +22,7 @@ const ERC20Transfer: React.FC<props> = ({
       return;
     }
     try {
-      const erc20ModuleAddr = "0x000000D50C68705bd6897B2d17c7de32FB519fDA";
+      const erc20ModuleAddr = "0xcf1cB148D1A2f49697d5d98097896aBeeE453dA7";
 
       const sessionKeyPrivKey = window.localStorage.getItem("sessionPKey");
       console.log("sessionKeyPrivKey", sessionKeyPrivKey);
@@ -58,7 +58,7 @@ const ERC20Transfer: React.FC<props> = ({
 
       const { data } = await tokenContract.populateTransaction.transfer(
         "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6", // receiver address
-        ethers.utils.parseUnits("1".toString(), decimals)
+        ethers.utils.parseUnits("0.1".toString(), decimals)
       );
 
       console.log(`1[transfer]data: `, data);

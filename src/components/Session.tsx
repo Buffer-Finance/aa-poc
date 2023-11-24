@@ -54,7 +54,7 @@ const Session: React.FC<{
       alert("Please connect wallet first");
     }
     try {
-      const erc20ModuleAddr = "0x000000D50C68705bd6897B2d17c7de32FB519fDA";
+      const erc20ModuleAddr = "0xcf1cB148D1A2f49697d5d98097896aBeeE453dA7";
       // -----> setMerkle tree tx flow
       // create dapp side session key
       const sessionSigner = ethers.Wallet.createRandom();

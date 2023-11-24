@@ -81,6 +81,12 @@ export default function Home() {
   const { data, isError } = useBalance({
     token: "0xdA5289fCAAF71d52a80A254da614a192b693e977",
     address: "0x0CB8D067bb7bA1D44edc95F96A86196C6C7adFA6",
+    watch: true,
+  });
+  const { data: d2 } = useBalance({
+    token: "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+    address: smartAccountAddress,
+    watch: true,
   });
   console.log("1ct balance", data);
   const createv1SmartAccount = async () => {
@@ -112,8 +118,14 @@ export default function Home() {
         {address && <h2>EOA: {address}</h2>}
         {smartAccountAddress && <h2>Smart Account: {smartAccountAddress}</h2>}
         {biconomyAccount && (
-          <Counter smartAccount={biconomyAccount} provider={""} />
+          <Counter
+            address={smartAccountAddress}
+            smartAccount={biconomyAccount}
+            provider={""}
+          />
         )}
+        <div>Reciever Balance:{data?.formatted}</div>
+        <div>Sender Balance:{d2?.formatted}</div>
         <ol>
           {steps.map((d) => (
             <li>{d}</li>
@@ -141,7 +153,7 @@ export default function Home() {
         {biconomyAccount && (
           <Session
             smartAccount={biconomyAccount}
-            address={address}
+            address={smartAccountAddress}
             provider={walletClientToSigner(walletClient)}
           />
         )}
